@@ -1,12 +1,15 @@
-import os
+import os, sys
 import win32com.client
 import extract_msg
 import pdfplumber
 import re
 from openpyxl import Workbook, load_workbook
 
-# 📂 Carpeta base = donde está el script
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# 📂 Carpeta base = donde está el exe o script
+if getattr(sys, 'frozen', False):  # ejecutado como exe
+    BASE_DIR = os.path.dirname(sys.executable)
+else:  # ejecutado como .py
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # 📂 Carpeta para PDFs
 PDF_DIR = os.path.join(BASE_DIR, "pdfs")
@@ -103,3 +106,4 @@ for mail in correos_filtrados:
         print("⚠️ Error procesando correo:", e)
 
     # print("------")
+
